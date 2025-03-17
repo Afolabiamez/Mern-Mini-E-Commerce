@@ -1,5 +1,8 @@
 import { create } from "zustand";
 
+const API_BASE_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export const useProductStore = create((set) => ({
   products: [],
   setProducts: (products) => set({ products }),
@@ -7,7 +10,7 @@ export const useProductStore = create((set) => ({
     if (!newProduct.name || !newProduct.image || !newProduct.price) {
       return { success: false, message: "Please fill in all fields." };
     }
-    const res = await fetch("http://localhost:5000/api/products", {
+    const res = await fetch(`${API_BASE_URL}/api/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +24,7 @@ export const useProductStore = create((set) => ({
 
   fetchProducts: async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/products");
+      const response = await fetch(`${API_BASE_URL}/api/products`);
       const data = await response.json();
       if (Array.isArray(data)) {
         useProductStore.getState().setProducts(data);
@@ -36,7 +39,7 @@ export const useProductStore = create((set) => ({
   },
 
   deleteProduct: async (pid) => {
-    const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${pid}`, {
       method: "DELETE",
     });
     const data = await res.json();
@@ -49,7 +52,7 @@ export const useProductStore = create((set) => ({
     return { success: true, message: data.message };
   },
   updateProduct: async (pid, updatedProduct) => {
-    const res = await fetch(`http://localhost:5000/api/products/${pid}`, {
+    const res = await fetch(`${API_BASE_URL}/api/products/${pid}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

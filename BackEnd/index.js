@@ -6,7 +6,7 @@ import productRoutes from "./Routes/productRoutes.js";
 
 const app = express();
 app.use(express.json()); // allows us to accept json data in the request.body
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 app.use("/api/products", productRoutes);
 const PORT = process.env.PORT || 5000;
@@ -21,7 +21,11 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`server started at http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`server started at http://localhost:${PORT}`);
+  });
+};
+
+startServer();
