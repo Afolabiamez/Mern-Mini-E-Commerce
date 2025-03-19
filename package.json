@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon BackEnd/index.js",
+    "dev": "nodemon BackEnd/index.js",
     "build": "npm install && npm install --prefix FrontEnd && npm run build --prefix FrontEnd",
-    "start": "env NODE_ENV=production node BackEnd/index.js"
+    "start": "node BackEnd/index.js"
   },
   "type": "module",
   "keywords": [],
